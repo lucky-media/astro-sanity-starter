@@ -1,0 +1,27 @@
+---
+import HeroSection from "./blocks/HeroSection.astro";
+import CtaSection from "./blocks/CtaSection.astro";
+import type { PAGE_BY_SLUG_RESULT } from "@starter/sanity-types";
+
+const BLOCK_MAP = {
+  heroSection: HeroSection,
+  ctaSection: CtaSection,
+} as const;
+
+type BlockType = keyof typeof BLOCK_MAP;
+
+type PageBuilderBlock = NonNullable<
+  NonNullable<PAGE_BY_SLUG_RESULT>["builder"]
+>[number];
+
+interface Props {
+  block: PageBuilderBlock;
+}
+
+const { block } = Astro.props;
+
+const Template =
+  block._type in BLOCK_MAP ? BLOCK_MAP[block._type as BlockType] : null;
+---
+
+{Template && <Template {...(block as any)} />}

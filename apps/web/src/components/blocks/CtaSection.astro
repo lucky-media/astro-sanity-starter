@@ -1,0 +1,31 @@
+---
+import type { PAGE_BY_SLUG_RESULT } from "@starter/sanity-types";
+
+type PageBuilderBlock = NonNullable<NonNullable<PAGE_BY_SLUG_RESULT>["builder"]>[number];
+type Props = Extract<PageBuilderBlock, { _type: "ctaSection" }>;
+
+const { heading, image, cta } = Astro.props;
+const Tag = (heading?.tag || "h2") as keyof HTMLElementTagNameMap;
+const dimensions = image?.asset?.metadata?.dimensions;
+---
+
+<section>
+  {heading?.title && <Tag>{heading.title}</Tag>}
+  {image?.asset?.url && (
+    <img
+      src={image.asset.url}
+      alt={image.alt || ""}
+      width={dimensions?.width}
+      height={dimensions?.height}
+    />
+  )}
+  {cta?.href && (
+    <a
+      href={cta.href}
+      target={cta.openInNewTab ? "_blank" : undefined}
+      rel={cta.openInNewTab ? "noopener noreferrer" : undefined}
+    >
+      {cta.text}
+    </a>
+  )}
+</section>

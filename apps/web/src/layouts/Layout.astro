@@ -1,0 +1,27 @@
+---
+import "@/styles/global.css";
+import Head, { type Props as HeadProps } from "@/layouts/Head.astro";
+import { getNavigation, getSettings } from "@/lib/api";
+import { initSeoConfig } from "@/seo.config";
+import { VisualEditing } from "@sanity/astro/visual-editing";
+
+interface Props extends HeadProps {}
+
+const { metadata } = Astro.props;
+
+const [settings, navigation] = await Promise.all([getSettings(), getNavigation()]);
+
+initSeoConfig(settings);
+
+const visualEditingEnabled = import.meta.env.PUBLIC_SANITY_VISUAL_EDITING === "true";
+---
+
+<!doctype html>
+<html lang="en">
+  <Head metadata={metadata} />
+  <body>
+    <slot />
+
+    <VisualEditing enabled={visualEditingEnabled} />
+  </body>
+</html>

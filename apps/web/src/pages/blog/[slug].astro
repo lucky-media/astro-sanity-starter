@@ -1,0 +1,41 @@
+---
+import { client } from "@/utils/sanity";
+import { POST_BY_SLUG, ALL_POSTS } from "@/queries/posts";
+import { PortableText } from "astro-portabletext";
+import Layout from "@/layouts/Layout.astro";
+import { generateMetadata } from "@/lib/metadata";
+
+export async function getStaticPaths() {
+  try {
+    const posts = await client.fetch(ALL_POSTS);
+    return (posts ?? [])
+      .filter((p) => p.slug)
+      .map((p) => ({ params: { slug: p.slug! } }));
+  } catch {
+    // Sanity credentials not configured — return empty paths
+    return [];
+  }
+}
+
+const { slug } = Astro.params;
+const post = await client.fetch(POST_BY_SLUG, { slug });
+
+if (!post) {
+  return Astro.redirect("/404");
+}
+
+const metadata = generateMetadata({
+  seo: post.seo,
+  title: post.title,
+  url: `/blog/${slug}`,
+  type: "article",
+  publishedTime: post.publishedAt ?? undefined,
+});
+---
+
+<Layout metadata={metadata}>
+  <article>
+    <h1>{post.title}</h1>
+    {post.body && <PortableText value={post.body} />}
+  </article>
+</Layout>
