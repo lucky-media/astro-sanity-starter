@@ -11,7 +11,10 @@ const isObject = (item: unknown): item is object => {
  * @param sources - Source objects to merge from
  * @returns The merged object
  */
-const mergeDeep = <T extends object>(target: T, ...sources: Partial<T>[]): T => {
+const mergeDeep = <T extends object>(
+  target: T,
+  ...sources: Partial<T>[]
+): T => {
   if (!sources.length) return target;
   const source = sources.shift();
 

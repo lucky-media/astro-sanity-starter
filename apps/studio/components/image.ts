@@ -14,7 +14,8 @@ export const imageComponent = defineType({
       title: "Alternative text",
       description: "Important for SEO and accessibility.",
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      validation: (Rule: any) => Rule.warning("Alt text improves SEO and accessibility"),
+      validation: (Rule: any) =>
+        Rule.warning("Alt text improves SEO and accessibility"),
     },
   ],
 });

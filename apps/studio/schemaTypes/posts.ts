@@ -68,6 +68,8 @@ export const postType = defineType({
   ],
   preview: {
     select: { title: "title", media: "featuredImage" },
-    prepare({ title, media }) { return { title, media }; },
+    prepare({ title, media }) {
+      return { title, media };
+    },
   },
 });

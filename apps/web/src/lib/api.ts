@@ -28,7 +28,9 @@ export async function getPages(): Promise<ALL_PAGES_RESULT> {
   return await client.fetch(ALL_PAGES);
 }
 
-export async function getPageBySlug(slug: string): Promise<PAGE_BY_SLUG_RESULT> {
+export async function getPageBySlug(
+  slug: string,
+): Promise<PAGE_BY_SLUG_RESULT> {
   return await client.fetch(PAGE_BY_SLUG, { slug });
 }
 
@@ -36,6 +38,8 @@ export async function getPosts(): Promise<ALL_POSTS_RESULT> {
   return await client.fetch(ALL_POSTS);
 }
 
-export async function getPostBySlug(slug: string): Promise<POST_BY_SLUG_RESULT> {
+export async function getPostBySlug(
+  slug: string,
+): Promise<POST_BY_SLUG_RESULT> {
   return await client.fetch(POST_BY_SLUG, { slug });
 }

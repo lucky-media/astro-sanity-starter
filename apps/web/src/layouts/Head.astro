@@ -7,7 +7,15 @@ export interface Props {
 }
 
 const { metadata } = Astro.props;
-const { title, description, url, robots, alternates, openGraph: og, twitter } = metadata;
+const {
+  title,
+  description,
+  url,
+  robots,
+  alternates,
+  openGraph: og,
+  twitter,
+} = metadata;
 
 const robotsContent = [
   robots.index ? "index" : "noindex",
@@ -15,7 +23,9 @@ const robotsContent = [
 ].join(", ");
 
 const canonicalUrl =
-  alternates?.canonical || url || new URL(Astro.url.pathname, seoConfig.siteUrl).href;
+  alternates?.canonical ||
+  url ||
+  new URL(Astro.url.pathname, seoConfig.siteUrl).href;
 ---
 
 <head>
@@ -42,8 +52,12 @@ const canonicalUrl =
     og.images?.map((img) => (
       <>
         <meta property="og:image" content={img.url} />
-        {img.width && <meta property="og:image:width" content={String(img.width)} />}
-        {img.height && <meta property="og:image:height" content={String(img.height)} />}
+        {img.width && (
+          <meta property="og:image:width" content={String(img.width)} />
+        )}
+        {img.height && (
+          <meta property="og:image:height" content={String(img.height)} />
+        )}
         {img.alt && <meta property="og:image:alt" content={img.alt} />}
       </>
     ))
@@ -52,8 +66,12 @@ const canonicalUrl =
   {
     og.type === "article" && (
       <>
-        {og.publishedTime && <meta property="article:published_time" content={og.publishedTime} />}
-        {og.modifiedTime && <meta property="article:modified_time" content={og.modifiedTime} />}
+        {og.publishedTime && (
+          <meta property="article:published_time" content={og.publishedTime} />
+        )}
+        {og.modifiedTime && (
+          <meta property="article:modified_time" content={og.modifiedTime} />
+        )}
         {og.authors?.map((author) => (
           <meta property="article:author" content={author} />
         ))}

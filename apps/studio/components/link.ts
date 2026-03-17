@@ -16,7 +16,8 @@ export const linkComponent = defineType({
             externalUrl?: string;
             customLink?: string;
           };
-          const hasLink = parent?.internalLink || parent?.externalUrl || parent?.customLink;
+          const hasLink =
+            parent?.internalLink || parent?.externalUrl || parent?.customLink;
           if (hasLink && !value) return "Link text is required";
           return true;
         }),
@@ -82,9 +83,14 @@ export const linkComponent = defineType({
     },
     prepare({ title, linkType, internalLink, externalUrl, customLink }) {
       let subtitle = "";
-      if (linkType === "internal") subtitle = internalLink ? `Internal: ${internalLink}` : "Internal (no page selected)";
-      else if (linkType === "external") subtitle = externalUrl || "External (no URL)";
-      else if (linkType === "custom") subtitle = customLink ? `Custom: ${customLink}` : "Custom (no link)";
+      if (linkType === "internal")
+        subtitle = internalLink
+          ? `Internal: ${internalLink}`
+          : "Internal (no page selected)";
+      else if (linkType === "external")
+        subtitle = externalUrl || "External (no URL)";
+      else if (linkType === "custom")
+        subtitle = customLink ? `Custom: ${customLink}` : "Custom (no link)";
       return { title: title || "Untitled Link", subtitle };
     },
   },

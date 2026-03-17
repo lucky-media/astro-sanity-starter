@@ -15,9 +15,11 @@ const metadata = generateMetadata({ seo: page?.seo, title: page?.title });
 ---
 
 <Layout metadata={metadata}>
-  {page?.builder ? (
-    page.builder.map((block) => <PageBuilder block={block} />)
-  ) : (
-    <p>Create a "home" document in Sanity to get started.</p>
-  )}
+  {
+    page?.builder ? (
+      page.builder.map((block) => <PageBuilder block={block} />)
+    ) : (
+      <p>Create a "home" document in Sanity to get started.</p>
+    )
+  }
 </Layout>

@@ -11,7 +11,11 @@ export function sanityRedirectsPlugin(): AstroIntegration {
       "astro:config:setup": async ({ updateConfig, logger }) => {
         logger.info("Fetching redirects from Sanity...");
 
-        const env = loadEnv(process.env.NODE_ENV ?? "production", process.cwd(), "");
+        const env = loadEnv(
+          process.env.NODE_ENV ?? "production",
+          process.cwd(),
+          "",
+        );
         const projectId = env.PUBLIC_SANITY_PROJECT_ID;
         const dataset = env.PUBLIC_SANITY_DATASET || "production";
 
@@ -27,7 +31,9 @@ export function sanityRedirectsPlugin(): AstroIntegration {
           useCdn: true,
         });
 
-        type RedirectEntry = NonNullable<NonNullable<REDIRECTS_RESULT>["redirects"]>[number];
+        type RedirectEntry = NonNullable<
+          NonNullable<REDIRECTS_RESULT>["redirects"]
+        >[number];
 
         let entries: RedirectEntry[] = [];
 
@@ -45,7 +51,10 @@ export function sanityRedirectsPlugin(): AstroIntegration {
             .filter((r) => r.source && r.destination)
             .map((r) => [
               r.source!,
-              { status: (r.isPermanent ? 301 : 302) as 301 | 302, destination: r.destination! },
+              {
+                status: (r.isPermanent ? 301 : 302) as 301 | 302,
+                destination: r.destination!,
+              },
             ]),
         );
 

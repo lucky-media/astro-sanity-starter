@@ -55,7 +55,11 @@ export const pageType = defineType({
     },
     prepare: ({ title, slug, parentSlug }) => ({
       title,
-      subtitle: slug ? (parentSlug ? `/${parentSlug}/${slug}` : `/${slug}`) : "No slug",
+      subtitle: slug
+        ? parentSlug
+          ? `/${parentSlug}/${slug}`
+          : `/${slug}`
+        : "No slug",
     }),
   },
 });

@@ -17,7 +17,8 @@ export const redirects = defineType({
     defineField({
       name: "redirects",
       type: "array",
-      description: "Redirects for SEO purposes. Good practices: prefer 301 for permanent moves.",
+      description:
+        "Redirects for SEO purposes. Good practices: prefer 301 for permanent moves.",
       of: [
         defineField({
           name: "redirect",
@@ -32,12 +33,15 @@ export const redirects = defineType({
                 Rule.custom((value, context) => {
                   if (!value) return "Source is required";
                   if (!value.startsWith("/")) return "Source must start with /";
-                  const redirects = (context.document?.redirects || []) as RedirectTypes[];
+                  const redirects = (context.document?.redirects ||
+                    []) as RedirectTypes[];
                   const currentRedirect = context.parent as RedirectTypes;
                   const isDuplicate = redirects.some(
-                    (r) => r._key !== currentRedirect._key && r.source === value,
+                    (r) =>
+                      r._key !== currentRedirect._key && r.source === value,
                   );
-                  if (isDuplicate) return "This source path is already used in another redirect.";
+                  if (isDuplicate)
+                    return "This source path is already used in another redirect.";
                   return true;
                 }),
               ],
@@ -45,22 +49,38 @@ export const redirects = defineType({
             defineField({
               name: "destination",
               type: "string",
-              description: "Internal path (/new-page) or external URL (https://example.com)",
+              description:
+                "Internal path (/new-page) or external URL (https://example.com)",
               validation: (Rule) =>
                 Rule.required().custom((value) => {
                   if (!value) return "Destination is required";
                   const isInternal = value.startsWith("/");
-                  const isExternal = value.startsWith("http://") || value.startsWith("https://");
-                  if (!isInternal && !isExternal) return "Must be an internal path or full URL";
+                  const isExternal =
+                    value.startsWith("http://") || value.startsWith("https://");
+                  if (!isInternal && !isExternal)
+                    return "Must be an internal path or full URL";
                   return true;
                 }),
             }),
-            defineField({ name: "isPermanent", title: "Permanent Redirect (301)", type: "boolean", initialValue: true }),
+            defineField({
+              name: "isPermanent",
+              title: "Permanent Redirect (301)",
+              type: "boolean",
+              initialValue: true,
+            }),
           ],
           preview: {
-            select: { source: "source", destination: "destination", isPermanent: "isPermanent" },
+            select: {
+              source: "source",
+              destination: "destination",
+              isPermanent: "isPermanent",
+            },
             prepare({ source, destination, isPermanent }) {
-              return { title: `Source: ${source}`, subtitle: `Destination: ${destination}`, media: isPermanent ? () => "🔒" : () => "🔄" };
+              return {
+                title: `Source: ${source}`,
+                subtitle: `Destination: ${destination}`,
+                media: isPermanent ? () => "🔒" : () => "🔄",
+              };
             },
           },
         }),

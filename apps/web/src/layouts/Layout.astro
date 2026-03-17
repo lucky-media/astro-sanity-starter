@@ -9,11 +9,15 @@ interface Props extends HeadProps {}
 
 const { metadata } = Astro.props;
 
-const [settings, navigation] = await Promise.all([getSettings(), getNavigation()]);
+const [settings, navigation] = await Promise.all([
+  getSettings(),
+  getNavigation(),
+]);
 
 initSeoConfig(settings);
 
-const visualEditingEnabled = import.meta.env.PUBLIC_SANITY_VISUAL_EDITING === "true";
+const visualEditingEnabled =
+  import.meta.env.PUBLIC_SANITY_VISUAL_EDITING === "true";
 ---
 
 <!doctype html>

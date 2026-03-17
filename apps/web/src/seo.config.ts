@@ -43,9 +43,12 @@ export function initSeoConfig(
   seoConfig = {
     siteName: settings.siteName || defaultSeoConfig.siteName,
     siteUrl: settings.siteUrl?.replace(/\/$/, "") || defaultSeoConfig.siteUrl,
-    titleTemplate: settings.titleTemplate || `%s | ${settings.siteName || defaultSeoConfig.siteName}`,
+    titleTemplate:
+      settings.titleTemplate ||
+      `%s | ${settings.siteName || defaultSeoConfig.siteName}`,
     defaultTitle: settings.siteName || defaultSeoConfig.defaultTitle,
-    defaultDescription: settings.defaultDescription || defaultSeoConfig.defaultDescription,
+    defaultDescription:
+      settings.defaultDescription || defaultSeoConfig.defaultDescription,
     defaultImage: settings.defaultOgImage || defaultSeoConfig.defaultImage,
     locale: settings.locale || defaultSeoConfig.locale,
     twitterHandle: settings.twitterHandle || defaultSeoConfig.twitterHandle,

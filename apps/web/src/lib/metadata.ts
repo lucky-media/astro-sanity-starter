@@ -161,22 +161,29 @@ export function generateMetadata(input: MetadataInput = {}): Metadata {
 
   // Resolve values with priority: direct props > Sanity SEO > global config
   const title = input.title ?? seo?.metaTitle ?? null;
-  const description = input.description ?? seo?.metaDescription ?? seoConfig.defaultDescription;
+  const description =
+    input.description ?? seo?.metaDescription ?? seoConfig.defaultDescription;
   const image = input.image ?? sanityImage ?? null;
   const url = input.url ? toAbsoluteUrl(input.url) : undefined;
   const canonical = toAbsoluteUrl(input.canonical ?? seo?.canonicalUrl) || url;
   // On staging, force noIndex and noFollow regardless of CMS settings
-  const noIndex = isStaging ? true : (input.noIndex ?? seo?.noIndex ?? seoConfig.noIndex);
-  const noFollow = isStaging ? true : (input.noFollow ?? seo?.noFollow ?? seoConfig.noFollow);
+  const noIndex = isStaging
+    ? true
+    : (input.noIndex ?? seo?.noIndex ?? seoConfig.noIndex);
+  const noFollow = isStaging
+    ? true
+    : (input.noFollow ?? seo?.noFollow ?? seoConfig.noFollow);
   const type = input.type ?? "website";
 
   // OG values with fallbacks
   const ogTitle = input.ogTitle ?? seo?.ogTitle ?? title;
-  const ogDescription = input.ogDescription ?? seo?.ogDescription ?? description;
+  const ogDescription =
+    input.ogDescription ?? seo?.ogDescription ?? description;
 
   // Twitter values with fallbacks
   const twitterTitle = input.twitterTitle ?? seo?.twitterTitle ?? ogTitle;
-  const twitterDescription = input.twitterDescription ?? seo?.twitterDescription ?? ogDescription;
+  const twitterDescription =
+    input.twitterDescription ?? seo?.twitterDescription ?? ogDescription;
   const twitterImage = sanityTwitterImage ?? image;
 
   // Build final resolved values

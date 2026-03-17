@@ -2,7 +2,9 @@
 import { PortableText } from "astro-portabletext";
 import type { PAGE_BY_SLUG_RESULT } from "@starter/sanity-types";
 
-type PageBuilderBlock = NonNullable<NonNullable<PAGE_BY_SLUG_RESULT>["builder"]>[number];
+type PageBuilderBlock = NonNullable<
+  NonNullable<PAGE_BY_SLUG_RESULT>["builder"]
+>[number];
 type Props = Extract<PageBuilderBlock, { _type: "heroSection" }>;
 
 const { heading, body } = Astro.props;
