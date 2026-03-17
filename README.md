@@ -32,7 +32,7 @@ packages/
 ### 1. Clone and install
 
 ```bash
-git clone <repo-url> my-project
+git clone https://github.com/lucky-media/astro-sanity-starter my-project
 cd my-project
 npm install
 ```
