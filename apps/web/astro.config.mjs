@@ -3,10 +3,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { loadEnv } from "vite";
 
-import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
 import sanity from "@sanity/astro";
-import react from "@astrojs/react";
 import alpinejs from "@astrojs/alpinejs";
 
 import tailwindcss from "@tailwindcss/vite";
@@ -42,7 +40,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   output: useDrafts ? "server" : "static",
-  adapter: node({ mode: "standalone" }),
   integrations: [
     alpinejs({ entrypoint: "./src/alpine.ts" }),
     sitemap(),
@@ -56,7 +53,6 @@ export default defineConfig({
         enabled: visualEditing,
       },
     }),
-    react(),
     sanityRedirectsPlugin(),
   ],
 });

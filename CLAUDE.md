@@ -101,7 +101,7 @@ SANITY_API_TOKEN=            # Required when USE_DRAFTS=true
 
 ## Tech Stack
 
-- **Astro 6** with `@astrojs/node` adapter
+- **Astro 6**
 - **Sanity Studio v5** with `structureTool` + `visionTool`
 - **Turborepo** with npm workspaces
 - `astro-portabletext` for portable text rendering
