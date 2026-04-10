@@ -1,1 +1,3 @@
 .sanity
+schema.json
+tsconfig.tsbuildinfo
