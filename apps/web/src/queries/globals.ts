@@ -41,13 +41,6 @@ export const SITE_SETTINGS = defineQuery(`
   *[_type == "siteSettings"][0] {
     siteName,
     siteUrl,
-    titleTemplate,
-    defaultDescription,
-    "defaultOgImage": defaultOgImage.asset->url,
-    locale,
-    twitterHandle,
-    "noIndex": coalesce(robotsDefault.noIndex, false),
-    "noFollow": coalesce(robotsDefault.noFollow, false),
     footerCopyright,
     socialMedia,
     footerLinks[] {

@@ -2,7 +2,8 @@
 import { getHomePage } from "@/lib/api";
 import PageBuilder from "@/components/PageBuilder.astro";
 import Layout from "@/layouts/Layout.astro";
-import { generateMetadata } from "@/lib/metadata";
+import { generateMetadata } from "virtual:@lucky-media/astro-seo";
+import { stripNulls } from "@/lib/strip-nulls";
 
 let page = null;
 try {
@@ -11,10 +12,10 @@ try {
   // Sanity credentials not configured — render fallback
 }
 
-const metadata = generateMetadata({ seo: page?.seo, title: page?.title });
+const pageMetadata = generateMetadata(stripNulls(page?.seo ?? {}));
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={pageMetadata}>
   {
     page?.builder ? (
       page.builder.map((block) => <PageBuilder block={block} />)

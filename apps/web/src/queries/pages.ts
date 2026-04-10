@@ -1,9 +1,10 @@
 import { defineQuery } from "groq";
 import { BUILDER } from "./blocks";
+import { SEO_FRAGMENT } from "./components";
 
 export const HOME_PAGE = defineQuery(`*[_type == "home" && _id == "home"][0] {
   title,
-  seo,
+  ${SEO_FRAGMENT},
   ${BUILDER}
 }`);
 
@@ -25,7 +26,7 @@ export const PAGE_BY_SLUG = defineQuery(`
       defined(parent) => parent->slug.current + "/" + slug.current,
       slug.current
     ),
-    seo,
+    ${SEO_FRAGMENT},
     ${BUILDER}
   }
 `);

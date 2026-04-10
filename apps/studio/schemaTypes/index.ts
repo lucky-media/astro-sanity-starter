@@ -12,6 +12,7 @@ import { ctaSectionBlock } from "../components/blocks/ctaSection";
 
 import { navigation } from "../globals/navigation";
 import { redirects } from "../globals/redirects";
+import { seoDefaults } from "../globals/seoDefaults";
 import { siteSettings } from "../globals/settings";
 
 export const schemaTypes = [
@@ -33,5 +34,6 @@ export const schemaTypes = [
   // Globals
   redirects,
   navigation,
+  seoDefaults,
   siteSettings,
 ];

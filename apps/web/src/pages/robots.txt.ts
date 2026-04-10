@@ -1,14 +1,15 @@
 import type { APIRoute } from "astro";
-import { getSettings } from "@/lib/api";
-import { defaultSeoConfig } from "@/seo.config";
+import { client } from "@/utils/sanity";
 
 export const GET: APIRoute = async () => {
-  let siteUrl = defaultSeoConfig.siteUrl;
+  let siteUrl = "https://your-site.com";
 
   try {
-    const settings = await getSettings();
-    if (settings?.siteUrl) {
-      siteUrl = settings.siteUrl.replace(/\/$/, "");
+    const seoDefaults = await client.fetch(
+      `*[_type == "seoDefaults"][0].siteUrl`,
+    );
+    if (seoDefaults) {
+      siteUrl = seoDefaults.replace(/\/$/, "");
     }
   } catch {
     // Sanity not configured — fall back to default site URL

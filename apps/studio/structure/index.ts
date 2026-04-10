@@ -1,7 +1,7 @@
 import type { StructureResolver } from "sanity/structure";
-import { MenuIcon, LinkIcon, CogIcon, HomeIcon } from "@sanity/icons";
+import { MenuIcon, LinkIcon, CogIcon, HomeIcon, SearchIcon } from "@sanity/icons";
 
-const hiddenDocuments = ["siteSettings", "redirects", "navigation", "home", "page"];
+const hiddenDocuments = ["siteSettings", "seoDefaults", "redirects", "navigation", "home", "page"];
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -25,6 +25,10 @@ export const structure: StructureResolver = (S) =>
           S.list()
             .title("Globals")
             .items([
+              S.listItem()
+                .title("SEO Defaults")
+                .icon(SearchIcon)
+                .child(S.document().schemaType("seoDefaults").documentId("seoDefaults")),
               S.listItem()
                 .title("Navigation")
                 .icon(MenuIcon)

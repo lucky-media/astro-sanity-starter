@@ -3,14 +3,15 @@ import { client } from "@/utils/sanity";
 import { POST_BY_SLUG, ALL_POSTS } from "@/queries/posts";
 import { PortableText } from "astro-portabletext";
 import Layout from "@/layouts/Layout.astro";
-import { generateMetadata } from "@/lib/metadata";
+import { generateMetadata } from "virtual:@lucky-media/astro-seo";
+import { stripNulls } from "@/lib/strip-nulls";
 
 export async function getStaticPaths() {
   try {
     const posts = await client.fetch(ALL_POSTS);
     return (posts ?? [])
-      .filter((p) => p.slug)
-      .map((p) => ({ params: { slug: p.slug! } }));
+      .filter((p: { slug: string | null }) => p.slug)
+      .map((p: { slug: string }) => ({ params: { slug: p.slug } }));
   } catch {
     // Sanity credentials not configured — return empty paths
     return [];
@@ -24,16 +25,19 @@ if (!post) {
   return Astro.redirect("/404");
 }
 
-const metadata = generateMetadata({
-  seo: post.seo,
-  title: post.title,
-  url: `/blog/${slug}`,
-  type: "article",
-  publishedTime: post.publishedAt ?? undefined,
+const seo = stripNulls(post.seo ?? {});
+
+const pageMetadata = generateMetadata({
+  ...seo,
+  openGraph: {
+    ...seo.openGraph,
+    type: "article",
+    url: `/blog/${slug}`,
+  },
 });
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={pageMetadata}>
   <article>
     <h1>{post.title}</h1>
     {post.body && <PortableText value={post.body} />}

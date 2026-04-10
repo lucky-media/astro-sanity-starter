@@ -1,5 +1,5 @@
 import { defineQuery } from "groq";
-import { IMAGE_ASSET } from "./components";
+import { IMAGE_ASSET, SEO_FRAGMENT } from "./components";
 
 export const ALL_POSTS = defineQuery(`*[_type == "post"] | order(publishedAt desc) {
   _id,
@@ -17,7 +17,7 @@ export const POST_BY_SLUG = defineQuery(`*[_type == "post" && slug.current == $s
   title,
   "slug": slug.current,
   publishedAt,
-  seo,
+  ${SEO_FRAGMENT},
   featuredImage {
     ${IMAGE_ASSET},
     alt

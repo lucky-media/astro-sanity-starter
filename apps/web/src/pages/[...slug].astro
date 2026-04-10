@@ -2,7 +2,11 @@
 import { getPages, getPageBySlug } from "@/lib/api";
 import PageBuilder from "@/components/PageBuilder.astro";
 import Layout from "@/layouts/Layout.astro";
-import { generateMetadata } from "@/lib/metadata";
+import {
+  generateMetadata,
+  type Metadata,
+} from "virtual:@lucky-media/astro-seo";
+import { stripNulls } from "@/lib/strip-nulls";
 
 export async function getStaticPaths() {
   try {
@@ -24,13 +28,20 @@ if (!page) {
   return Astro.redirect("/404");
 }
 
-const metadata = generateMetadata({
-  seo: page.seo,
-  title: page.title,
-  url: `/${slug}`,
+const seo: Metadata = stripNulls(page.seo ?? {});
+
+const pageMetadata = generateMetadata({
+  ...seo,
+  alternates: {
+    canonical: seo.alternates?.canonical ?? `/${slug}`,
+  },
+  openGraph: {
+    ...seo.openGraph,
+    url: `/${slug}`,
+  },
 });
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={pageMetadata}>
   {page.builder?.map((block) => <PageBuilder block={block} />)}
 </Layout>

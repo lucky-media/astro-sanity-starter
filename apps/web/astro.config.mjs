@@ -1,29 +1,19 @@
 import { defineConfig } from "astro/config";
 import path from "path";
 import { fileURLToPath } from "url";
-import { loadEnv } from "vite";
 
 import sitemap from "@astrojs/sitemap";
 import sanity from "@sanity/astro";
 import alpinejs from "@astrojs/alpinejs";
+import { defaultSeo } from "@lucky-media/astro-seo";
 
 import tailwindcss from "@tailwindcss/vite";
 
 import { sanityRedirectsPlugin } from "./src/integrations/redirects";
+import { fetchSeoDefaults } from "./src/lib/seo-defaults";
+import { sanityConfig } from "./src/lib/sanity-config";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const {
-  PUBLIC_SANITY_USE_DRAFTS,
-  PUBLIC_SANITY_VISUAL_EDITING,
-  PUBLIC_SANITY_STUDIO_URL,
-  PUBLIC_SANITY_PROJECT_ID,
-  PUBLIC_SANITY_DATASET,
-} = loadEnv(process.env.NODE_ENV ?? "production", process.cwd(), "");
-
-const useDrafts = PUBLIC_SANITY_USE_DRAFTS === "true";
-const visualEditing = PUBLIC_SANITY_VISUAL_EDITING === "true";
-const studioUrl = PUBLIC_SANITY_STUDIO_URL || "http://localhost:3333";
 
 export default defineConfig({
   site: "https://your-site.com",
@@ -39,18 +29,19 @@ export default defineConfig({
     },
     plugins: [tailwindcss()],
   },
-  output: useDrafts ? "server" : "static",
+  output: sanityConfig.useDrafts ? "server" : "static",
   integrations: [
+    defaultSeo(() => fetchSeoDefaults()),
     alpinejs({ entrypoint: "./src/alpine.ts" }),
     sitemap(),
     sanity({
-      projectId: PUBLIC_SANITY_PROJECT_ID || "placeholder",
-      dataset: PUBLIC_SANITY_DATASET || "production",
+      projectId: sanityConfig.projectId,
+      dataset: sanityConfig.dataset,
       useCdn: false,
       apiVersion: "2025-01-01",
       stega: {
-        studioUrl,
-        enabled: visualEditing,
+        studioUrl: sanityConfig.studioUrl,
+        enabled: sanityConfig.visualEditing,
       },
     }),
     sanityRedirectsPlugin(),

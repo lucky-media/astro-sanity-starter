@@ -13,12 +13,6 @@ export const siteSettings = defineType({
       options: { collapsible: true, collapsed: false },
     },
     {
-      name: "seoDefaults",
-      title: "SEO Defaults",
-      description: "Default SEO settings applied across the entire site",
-      options: { collapsible: true, collapsed: false },
-    },
-    {
       name: "social",
       title: "Social Media",
       options: { collapsible: true, collapsed: true },
@@ -46,78 +40,6 @@ export const siteSettings = defineType({
         Rule.required()
           .uri({ scheme: ["https"] })
           .error("Site URL is required"),
-    }),
-    defineField({
-      name: "titleTemplate",
-      title: "Title Template",
-      type: "string",
-      description: "Use %s as placeholder (e.g., '%s | My Site')",
-      fieldset: "seoDefaults",
-      validation: (Rule) =>
-        Rule.custom((value) => {
-          if (value && !value.includes("%s"))
-            return "Title template must include %s placeholder";
-          return true;
-        }),
-    }),
-    defineField({
-      name: "defaultDescription",
-      title: "Default Meta Description",
-      type: "text",
-      rows: 3,
-      fieldset: "seoDefaults",
-      validation: (Rule) =>
-        Rule.max(200).warning(
-          "Meta descriptions should be under 200 characters",
-        ),
-    }),
-    defineField({
-      name: "defaultOgImage",
-      title: "Default Social Image",
-      type: "image",
-      description: "1200x630px recommended",
-      fieldset: "seoDefaults",
-      options: { hotspot: true },
-    }),
-    defineField({
-      name: "locale",
-      title: "Default Locale",
-      type: "string",
-      fieldset: "seoDefaults",
-      initialValue: "en_US",
-    }),
-    defineField({
-      name: "twitterHandle",
-      title: "Twitter/X Handle",
-      type: "string",
-      description: "Include @ (e.g., '@mysite')",
-      fieldset: "seoDefaults",
-      validation: (Rule) =>
-        Rule.custom((value) => {
-          if (value && !value.startsWith("@"))
-            return "Twitter handle should start with @";
-          return true;
-        }),
-    }),
-    defineField({
-      name: "robotsDefault",
-      title: "Default Robots Settings",
-      type: "object",
-      fieldset: "seoDefaults",
-      fields: [
-        defineField({
-          name: "noIndex",
-          title: "No Index (Default)",
-          type: "boolean",
-          initialValue: false,
-        }),
-        defineField({
-          name: "noFollow",
-          title: "No Follow (Default)",
-          type: "boolean",
-          initialValue: false,
-        }),
-      ],
     }),
     defineField({
       name: "socialMedia",
